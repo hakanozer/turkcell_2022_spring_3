@@ -13,7 +13,7 @@
 		<div class="col-sm-4"></div>
 		<div class="col-sm-4">
 			<h2>Admin Register</h2>
-
+			<div th:if="${error != null}" th:text="${error}"></div>
 			<form action="/register" method="post">
 				<div class="mb-3">
 					<input required class="form-control" name="name" type="text" placeholder="Name" />
