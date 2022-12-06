@@ -27,7 +27,7 @@ public class FilterConfig implements Filter {
         String[] urls = {"/", "/login", "/register"};
         boolean loginStatus = true;
         for (String item : urls) {
-            if (url.equals(item)) {
+            if (url.equals(item) || url.contains("h2-console")) {
                 loginStatus = false;
                 break;
             }
