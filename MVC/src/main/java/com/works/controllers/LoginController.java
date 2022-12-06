@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -20,6 +21,7 @@ import java.util.List;
 public class LoginController {
 
     final AdminService adminService;
+    final HttpServletRequest httpServletRequest;
 
     @GetMapping("/")
     public String login(Model model) {
@@ -34,12 +36,13 @@ public class LoginController {
             return "login";
         }
         Admin adminDB = adminService.login(admin);
-        if (adminDB != null) {
-
+        if ( adminDB != null ) {
+            httpServletRequest.getSession().setAttribute("admin", adminDB);
+            return "redirect:/dashboard";
         }else {
-
+            return "redirect:/";
         }
-        return "redirect:/";
+
     }
 
 }
