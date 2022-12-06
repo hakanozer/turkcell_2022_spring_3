@@ -1,6 +1,7 @@
 package com.works.controllers;
 
 import com.works.entities.Admin;
+import com.works.services.AdminService;
 import com.works.services.TinkEncDec;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -18,15 +19,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LoginController {
 
-    final TinkEncDec tinkEncDec;
+    final AdminService adminService;
 
     @GetMapping("/")
     public String login(Model model) {
-        String pass = tinkEncDec.encrypt("12345");
-        System.out.println(pass);
-
-        String newsPass = tinkEncDec.decrypt(pass);
-        System.out.println(newsPass);
         return "login";
     }
 
@@ -37,7 +33,12 @@ public class LoginController {
             model.addAttribute("errors", errors);
             return "login";
         }
-        System.out.println( admin );
+        Admin adminDB = adminService.login(admin);
+        if (adminDB != null) {
+
+        }else {
+
+        }
         return "redirect:/";
     }
 

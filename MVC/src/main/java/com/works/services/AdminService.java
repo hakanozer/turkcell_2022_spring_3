@@ -5,6 +5,8 @@ import com.works.repositories.AdminRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class AdminService {
@@ -20,6 +22,18 @@ public class AdminService {
         }catch (Exception ex) {
             return null;
         }
+    }
+
+    public Admin login(Admin admin) {
+        Optional<Admin> optionalAdmin = adminRepository.findByEmailEqualsIgnoreCase(admin.getEmail());
+        if ( optionalAdmin.isPresent() ) {
+            Admin adm = optionalAdmin.get();
+            String dbPass = tinkEncDec.decrypt(adm.getPassword());
+            if (dbPass.equals(admin.getPassword())) {
+                return adm;
+            }
+        }
+        return null;
     }
 
 

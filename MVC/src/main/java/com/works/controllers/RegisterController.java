@@ -26,7 +26,7 @@ public class RegisterController {
             model.addAttribute("error", "Insert Fail");
             return "register";
         }
-        return "register";
+        return "redirect:/";
     }
 
 }
