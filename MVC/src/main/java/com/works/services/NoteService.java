@@ -31,7 +31,11 @@ public class NoteService {
     }
 
     public List<Note> noteList() {
-        return noteRepository.findAll();
+        Admin admin = control();
+        if (admin != null) {
+            return noteRepository.findByAidEquals(admin.getAid());
+        }
+        return null;
     }
 
     public Admin control() {

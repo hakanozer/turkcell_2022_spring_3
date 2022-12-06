@@ -30,20 +30,20 @@
 			<table class="table table-hover">
 				<thead>
 				<tr>
-					<th scope="col">ID</th>
+					<th scope="col">No.</th>
 					<th scope="col">Title</th>
 					<th scope="col">Detail</th>
 					<th scope="col">Color</th>
 					<th scope="col">Delete</th>
 				</tr>
 				</thead>
-				<tbody>
+				<tbody th:if="${list != null}">
 
-				<tr>
-					<th scope="row">1</th>
-					<td>Toplantı</td>
-					<td>Toplantı Detay</td>
-					<td>#ff00ff</td>
+				<tr th:each="item, iter : ${list} " >
+					<th scope="row" th:text="${iter.index + 1}"></th>
+					<td th:text="${item.title}"></td>
+					<td th:text="${item.detail}"></td>
+					<td th:text="${item.color}"></td>
 					<td><a href="/deleteNote" class="btn btn-danger btn-sm">Delete</a> </td>
 				</tr>
 
