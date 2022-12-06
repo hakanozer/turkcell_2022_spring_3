@@ -45,4 +45,10 @@ public class LoginController {
 
     }
 
+    @GetMapping("/logout")
+    public String logout() {
+        httpServletRequest.getSession().removeAttribute("admin");
+        return "redirect:/";
+    }
+
 }
