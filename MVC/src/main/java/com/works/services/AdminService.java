@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 public class AdminService {
 
     final AdminRepository adminRepository;
+    final TinkEncDec tinkEncDec;
 
     public Admin save(Admin admin) {
         try {
+            admin.setPassword(tinkEncDec.encrypt(admin.getPassword()));
             adminRepository.save(admin);
             return admin;
         }catch (Exception ex) {
