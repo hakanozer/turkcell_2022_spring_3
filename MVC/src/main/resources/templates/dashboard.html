@@ -9,7 +9,48 @@
 <body>
 <div class="container">
 	<div th:replace="inc/navbar"></div>
-	<h2>Welcome Dashboard</h2>
+	<div class="row">
+		<div class="col-sm-6">
+			<h2>Note Add</h2>
+			<form method="post" action="/noteAdd">
+				<div class="mb-3">
+					<input required name="title" class="form-control" placeholder="Title" />
+				</div>
+				<div class="mb-3">
+					<input required name="detail" class="form-control" placeholder="Detail" />
+				</div>
+				<div class="mb-3">
+					<input required type="color" name="color" class="form-control form-control-color" placeholder="Color" />
+				</div>
+				<button type="submit" class="btn btn-success">Send</button>
+			</form>
+		</div>
+		<div class="col-sm-6">
+			<h2>Note List</h2>
+			<table class="table table-hover">
+				<thead>
+				<tr>
+					<th scope="col">ID</th>
+					<th scope="col">Title</th>
+					<th scope="col">Detail</th>
+					<th scope="col">Color</th>
+					<th scope="col">Delete</th>
+				</tr>
+				</thead>
+				<tbody>
+
+				<tr>
+					<th scope="row">1</th>
+					<td>Toplantı</td>
+					<td>Toplantı Detay</td>
+					<td>#ff00ff</td>
+					<td><a href="/deleteNote" class="btn btn-danger btn-sm">Delete</a> </td>
+				</tr>
+
+				</tbody>
+			</table>
+		</div>
+	</div>
 
 </div>
 </body>
