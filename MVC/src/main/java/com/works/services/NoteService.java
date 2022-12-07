@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -37,6 +38,26 @@ public class NoteService {
         }
         return null;
     }
+
+    public boolean noteDelete(String nid) {
+        boolean status = false;
+        try {
+            Long lNid = Long.parseLong(nid);
+            Admin admin = control();
+            if (admin != null) {
+                Optional<Note> optionalNote = noteRepository.findByNidEquals(lNid);
+                if (optionalNote.isPresent()) {
+                    if ( optionalNote.get().getAid() == admin.getAid() ) {
+                        noteRepository.deleteById(lNid);
+                        return true;
+                    }
+                }
+
+            }
+        }catch (Exception ex) {}
+        return status;
+    }
+
 
     public Admin control() {
         Object obj = req.getSession().getAttribute("admin");
