@@ -4,6 +4,9 @@ import com.works.entities.Admin;
 import com.works.entities.Note;
 import com.works.repositories.NoteRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,10 +34,11 @@ public class NoteService {
         }
     }
 
-    public List<Note> noteList() {
+    public Page<Note> noteList(int page) {
         Admin admin = control();
         if (admin != null) {
-            return noteRepository.findByAidEquals(admin.getAid());
+            Pageable pageable = PageRequest.of(page, 3);
+            return noteRepository.findByAidEquals(admin.getAid(), pageable);
         }
         return null;
     }

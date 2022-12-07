@@ -43,12 +43,23 @@
 					<th scope="row" th:text="${iter.index + 1}"></th>
 					<td th:text="${item.title}"></td>
 					<td th:text="${item.detail}"></td>
-					<td th:text="${item.color}"></td>
+					<td>
+						<div th:style="'background-color: '+${item.color}+'; width: 30px; height: 30px;'"></div>
+					</td>
 					<td><a th:href="${'/deleteNote/'+item.nid}" class="btn btn-danger btn-sm">Delete</a> </td>
 				</tr>
 
 				</tbody>
 			</table>
+
+			<ul class="pagination pagination">
+
+				<li class="page-item" th:each="item, iter : ${pages}" >
+					<a class="page-link" th:href="${'dashboard?page='+iter.index}" th:text="${iter.index + 1}" ></a>
+				</li>
+
+			</ul>
+
 		</div>
 	</div>
 
