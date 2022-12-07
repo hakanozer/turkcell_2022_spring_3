@@ -1,15 +1,24 @@
 package com.works.configs;
 
 import com.works.entities.Admin;
+import com.works.repositories.AdminRepository;
+import com.works.services.TinkEncDec;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.*;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 @Configuration
+@RequiredArgsConstructor
 public class FilterConfig implements Filter {
+
+    final TinkEncDec tinkEncDec;
+    final AdminRepository adminRepository;
 
     @Override
     public void init(javax.servlet.FilterConfig filterConfig) throws ServletException {
@@ -33,6 +42,8 @@ public class FilterConfig implements Filter {
                 break;
             }
         }
+        // Cookie Login Control
+        cookieControl(req, res);
         // session control
         if (loginStatus) {
             Object obj = req.getSession().getAttribute("admin");
@@ -45,6 +56,32 @@ public class FilterConfig implements Filter {
         }
 
         filterChain.doFilter(req,res);
+    }
+
+    private void cookieControl(HttpServletRequest req, HttpServletResponse res) {
+        if ( req.getCookies() != null ) {
+            Cookie[] cookies = req.getCookies();
+            for(Cookie cookie : cookies) {
+                if( cookie.getName().equals("admin") ) {
+                    try {
+                        String val = cookie.getValue();
+                        String aid = tinkEncDec.decrypt(val);
+                        Long lAid = Long.parseLong(aid);
+                        Optional<Admin> optionalAdmin = adminRepository.findById(lAid);
+                        if (optionalAdmin.isPresent()) {
+                            req.getSession().setAttribute("admin", optionalAdmin.get());
+                        }else {
+                            throw new Exception("Cookie Null");
+                        }
+                    }catch (Exception ex) {
+                        Cookie deleteCookie = new Cookie("admin", "");
+                        deleteCookie.setMaxAge(0);
+                        res.addCookie(deleteCookie);
+                    }
+                    break;
+                }
+            }
+        }
     }
 
     @Override

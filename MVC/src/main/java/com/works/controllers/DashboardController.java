@@ -22,9 +22,11 @@ public class DashboardController {
     @GetMapping("/dashboard")
     public String dashboard(Model model, @RequestParam(defaultValue = "0") int page) {
         Page<Note> listPage = noteService.noteList(page);
-        int[] pages = new int[listPage.getTotalPages()];
-        model.addAttribute("list", listPage );
-        model.addAttribute("pages", pages);
+        if ( listPage != null ) {
+            int[] pages = new int[listPage.getTotalPages()];
+            model.addAttribute("list", listPage );
+            model.addAttribute("pages", pages);
+        }
         return "dashboard";
     }
 
