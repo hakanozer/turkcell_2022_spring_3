@@ -1,7 +1,8 @@
 package com.works.restcontrollers;
 
 import com.works.entities.Customer;
-import com.works.services.CustomerService;
+import com.works.entities.Product;
+import com.works.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,21 +10,20 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/customer")
+@RequestMapping("/product")
 @RequiredArgsConstructor
-public class CustomerRestController {
+public class ProductRestController {
 
-    final CustomerService customerService;
+    final ProductService productService;
 
     @PostMapping("/save")
-    public ResponseEntity save(@Valid @RequestBody Customer customer) {
-        return customerService.save(customer);
+    public ResponseEntity save(@Valid @RequestBody Product product) {
+        return productService.save(product);
     }
 
     @GetMapping("/list")
     public ResponseEntity list() {
-        return customerService.list();
+        return productService.list();
     }
-
 
 }

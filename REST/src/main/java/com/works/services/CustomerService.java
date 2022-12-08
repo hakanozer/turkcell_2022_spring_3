@@ -34,4 +34,11 @@ public class CustomerService {
         }
     }
 
+    public ResponseEntity list() {
+        Map<ERest, Object> hm = new LinkedHashMap<>();
+        hm.put(ERest.status, true);
+        hm.put(ERest.result, customerRepository.findAll());
+        return new ResponseEntity(hm, HttpStatus.OK);
+    }
+
 }
