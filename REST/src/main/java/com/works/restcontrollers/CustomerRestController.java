@@ -1,21 +1,24 @@
 package com.works.restcontrollers;
 
-import com.works.utils.ERest;
-import org.springframework.web.bind.annotation.GetMapping;
+import com.works.entities.Customer;
+import com.works.services.CustomerService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @RestController
+@RequestMapping("/customer")
+@RequiredArgsConstructor
 public class CustomerRestController {
 
-    @GetMapping("/")
-    public Map customer() {
-        Map<ERest, Object> hm = new HashMap<>();
-        hm.put(ERest.status, true);
-        hm.put(ERest.message, "Customer Success");
-        return hm;
+    final CustomerService customerService;
+
+    @PostMapping("/save")
+    public ResponseEntity save(@RequestBody Customer customer) {
+        return customerService.save(customer);
     }
 
 
