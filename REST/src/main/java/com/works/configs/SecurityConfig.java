@@ -18,5 +18,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().formLogin().disable();
+        http.headers().frameOptions().disable();
     }
+
+    /*
+        ali@mail.com -> product
+        veli@mail.com -> customer
+        zehre@mail.com -> product, customer
+     */
 }
