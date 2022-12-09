@@ -1,0 +1,14 @@
+package com.works.entities;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+public class Currency {
+
+    private String currencyName;
+    private String forexBuying;
+    private String forexSelling;
+
+}
