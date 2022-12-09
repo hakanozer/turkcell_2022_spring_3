@@ -19,6 +19,11 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class FilterConfig implements Filter {
 
+    // @EnableJpaAuditing
+    // @MappedSuperclass
+    // @EntityListeners(AuditingEntityListener.class)
+    // class AppAuditorAware implements AuditorAware<User>
+
     final InfoRepository infoRepository;
 
     @Override
