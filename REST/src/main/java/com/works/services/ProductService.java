@@ -4,6 +4,7 @@ import com.works.entities.Product;
 import com.works.repositories.ProductRepository;
 import com.works.utils.ERest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.CacheManager;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,12 +17,14 @@ import java.util.Map;
 public class ProductService {
 
     final ProductRepository productRepository;
+    final CacheManager cacheManager;
 
     public ResponseEntity save(Product product) {
         Map<ERest, Object> hm = new LinkedHashMap<>();
         productRepository.save(product);
         hm.put(ERest.status, true);
         hm.put(ERest.result, product);
+        cacheManager.getCache("productList").clear();
         return new ResponseEntity(hm, HttpStatus.OK);
     }
 
