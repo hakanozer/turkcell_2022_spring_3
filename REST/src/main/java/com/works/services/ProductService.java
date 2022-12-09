@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.cache.CacheManager;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashMap;
@@ -33,6 +34,12 @@ public class ProductService {
         hm.put(ERest.status, true);
         hm.put(ERest.result, productRepository.findAll());
         return new ResponseEntity(hm, HttpStatus.OK);
+    }
+
+    @Scheduled(fixedDelay = 150000)
+    public void cacheClear() {
+        System.out.println("cacheClear Call");
+        cacheManager.getCache("productList").clear();
     }
 
 }
