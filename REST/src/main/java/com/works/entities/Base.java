@@ -1,5 +1,6 @@
 package com.works.entities;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -15,15 +16,19 @@ import javax.persistence.MappedSuperclass;
 @Data
 public class Base {
 
+    @ApiModelProperty(hidden = true)
     @CreatedBy
     private String createdBy;
 
+    @ApiModelProperty(hidden = true)
     @CreatedDate
     private Long createdDate;
 
+    @ApiModelProperty(hidden = true)
     @LastModifiedBy
     private String lastModifiedBy;
 
+    @ApiModelProperty(hidden = true)
     @LastModifiedDate
     private Long lastModifiedDate;
 
